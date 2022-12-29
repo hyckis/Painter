@@ -1,5 +1,3 @@
-// 105403506資管3A何宜親
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -13,7 +11,7 @@ public class Painter {
 		frame.setVisible(true);
 		
 		// Welcome Message
-		JOptionPane.showMessageDialog(null, "Welcome!", "訊息", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, "Welcome!", "W", JOptionPane.INFORMATION_MESSAGE);
 		
 	}
 	
