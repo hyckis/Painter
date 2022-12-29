@@ -1,5 +1,3 @@
-// 105403506¸êºŞ3A¦ó©y¿Ë
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.event.*;
@@ -12,12 +10,12 @@ public class PaintingField extends JPanel {
 	static int x1, x2, y1, y2;	// Mouse Location
 	boolean isEnd = false;	// monitor whether painting is end
 	
-	private final ArrayList<Point> points = new ArrayList<>();	// Àx¦s·Æ¹«¸g¹LªºÂI
+	private final ArrayList<Point> points = new ArrayList<>();	// å„²å­˜æ»‘é¼ ç¶“éçš„é»
 	
-	static int panelWid, panelHei;	// BufferedImageªø¼e
-	static BufferedImage currentImg;	// ¦s¨ú¥Ø«eµe­±
+	static int panelWid, panelHei;	// BufferedImageé•·å¯¬
+	static BufferedImage currentImg;	// å­˜å–ç›®å‰ç•«é¢
 	static Graphics2D bufferGraphics;
-	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();	// Àò¨úµøµ¡¤j¤p
+	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();	// ç²å–è¦–çª—å¤§å°
 	
 	public PaintingField() {
 		
@@ -44,7 +42,7 @@ public class PaintingField extends JPanel {
 					public void mouseEntered(MouseEvent e) {}
 					@Override
 					public void mouseExited(MouseEvent e) {
-						(Frame.statusField).setText(String.format("Â÷¶}µe¥¬"));
+						(Frame.statusField).setText(String.format("é›¢é–‹ç•«å¸ƒ"));
 					}
 		});
 		
@@ -52,7 +50,7 @@ public class PaintingField extends JPanel {
 				new MouseAdapter() {
 					@Override
 					public void mouseDragged(MouseEvent e) {					
-						// µ§¨ê
+						// ç­†åˆ·
 						if (Frame.penMode == 0) {
 							points.add(e.getPoint());
 							repaint();
@@ -65,36 +63,36 @@ public class PaintingField extends JPanel {
 					}
 					@Override
 					public void mouseMoved(MouseEvent e) {
-						(Frame.statusField).setText(String.format("´å¼Ğ¦ì¸m: {%d, %d}", e.getX(), e.getY()));						
+						(Frame.statusField).setText(String.format("æ¸¸æ¨™ä½ç½®: {%d, %d}", e.getX(), e.getY()));						
 					}
 		});
 		
 	}
 	
-	// ³]©wµe¥¬
+	// è¨­å®šç•«å¸ƒ
 	public void paintComponent(Graphics g) {		
 		super.paintComponent(g);
 		setBackground(Color.white);
 		saveBufferedImg(g);			
 	}
 	
-	// ¤u¨ã>>µe¦bBufferedImage¤W
+	// å·¥å…·>>ç•«åœ¨BufferedImageä¸Š
 	public void draw(Graphics g) {
 		
 		Graphics2D g2 = (Graphics2D) g;		
 		
 		// brush color
-		if (Frame.erase == 0)	// ¦UºØµ§¨ê¼Ò¦¡ 
+		if (Frame.erase == 0)	// å„ç¨®ç­†åˆ·æ¨¡å¼ 
 			g.setColor(Frame.foregroundColor);	
-		else if (Frame.erase == 1)  	// ¾ó¥ÖÀ¿¼Ò¦¡
+		else if (Frame.erase == 1)  	// æ©¡çš®æ“¦æ¨¡å¼
 			g.setColor(Color.white);
 				
-		// ¹ê½uµ§¨ê²Ê²Ó
+		// å¯¦ç·šç­†åˆ·ç²—ç´°
 		Frame.brush = new BasicStroke(Frame.brushSize, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10);
 		g2.setStroke(Frame.brush);
 			
-		// µ§¨ê¼Ò¦¡
-		// µ§¨ê
+		// ç­†åˆ·æ¨¡å¼
+		// ç­†åˆ·
 		if (Frame.penMode == 0) {		
 			for(int i=0; i<points.size()-1; i++) {
 				x1 = points.get(i).x;
@@ -104,19 +102,19 @@ public class PaintingField extends JPanel {
 				g.drawLine(x1, y1, x2, y2);
 			}
 		}
-		// ª½½u
+		// ç›´ç·š
 		if (Frame.penMode == 1) {
-			if (Frame.fill == 0) {	// µê½uµ§¨ê
+			if (Frame.fill == 0) {	// è™›ç·šç­†åˆ·
 				Frame.brush = new BasicStroke(Frame.brushSize, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10, new float[] {3,10}, 10);
 				g2.setStroke(Frame.brush);
 			}
 			g.drawLine(x1, y1, x2, y2);
 		}
-		// ¾ò¶ê§Î
+		// æ©¢åœ“å½¢
 		if (Frame.penMode == 2) {		
-			int width = Math.abs(x1 - x2);	// Math.abs¨úµ´¹ï­È
+			int width = Math.abs(x1 - x2);	// Math.abså–çµ•å°å€¼
 			int height = Math.abs(y1 - y2);
-			if (Frame.fill == 1) {	// ¶ñº¡
+			if (Frame.fill == 1) {	// å¡«æ»¿
 				if (Frame.erase == 1)
 					g.fillOval(Math.min(x1, x2), Math.min(y1, y2), width, height);
 				else if (Frame.erase == 0) {
@@ -128,11 +126,11 @@ public class PaintingField extends JPanel {
 			g.drawOval(Math.min(x1, x2), Math.min(y1, y2), width, height);	
 			
 		}
-		// ¯x§Î
+		// çŸ©å½¢
 		if (Frame.penMode == 3) {
 			int width = Math.abs(x1 - x2);
 			int height = Math.abs(y1 - y2);	
-			if (Frame.fill == 1) {	// ¶ñº¡
+			if (Frame.fill == 1) {	// å¡«æ»¿
 				if (Frame.erase == 1)
 					g.fillRect(Math.min(x1, x2), Math.min(y1, y2), width, height);
 				else if (Frame.erase == 0) {
@@ -143,8 +141,8 @@ public class PaintingField extends JPanel {
 			}
 			g.drawRect(Math.min(x1, x2), Math.min(y1, y2), width, height);
 		}
-		// ¶ê¨¤¯x§Î
-		if (Frame.penMode == 4) {	// ¶ñº¡		
+		// åœ“è§’çŸ©å½¢
+		if (Frame.penMode == 4) {	// å¡«æ»¿		
 			int width = Math.abs(x1 - x2);
 			int height = Math.abs(y1 - y2);
 			if (Frame.fill == 1) {
@@ -161,12 +159,12 @@ public class PaintingField extends JPanel {
 
 	}
 
-	// Àx¦sµe­±
+	// å„²å­˜ç•«é¢
 	public void saveBufferedImg(Graphics g) {
 		Graphics2D saveGraphics = (Graphics2D) g;
 		saveGraphics.drawImage(currentImg, null, 0, 0);
 		draw(saveGraphics);
-		if (isEnd) {	// ·Æ¹«¨Æ¥óµ²§ô(released)«á§âcurrentImg¥á¨ìµe­±¤W
+		if (isEnd) {	// æ»‘é¼ äº‹ä»¶çµæŸ(released)å¾ŒæŠŠcurrentImgä¸Ÿåˆ°ç•«é¢ä¸Š
 			draw(bufferGraphics);
 			points.clear();
 			isEnd = false;
