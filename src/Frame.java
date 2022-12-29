@@ -1,5 +1,3 @@
-// 105403506¸êºŞ3A¦ó©y¿Ë
-
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -16,13 +14,13 @@ public class Frame extends JFrame {
 	
 	// ComboBox -> Brush Mode
 	final JComboBox<String> toolsJComboBox;	//holds tools' names
-	static final String[] toolNames = {"µ§¨ê", "ª½½u", "¾ò¶ê§Î", "¯x§Î", "¶ê¨¤¯x§Î"};
+	static final String[] toolNames = {"ç­†åˆ·", "ç›´ç·š", "æ©¢åœ“å½¢", "çŸ©å½¢", "åœ“è§’çŸ©å½¢"};
 
 	// Radio Button -> Brush sizes
 	final JRadioButton[] brushJRadioButton;	// selects medium brush		
 	final ButtonGroup brushRadioGroup;	//holds radio buttons
 
-	// CheckBox -> ¬O§_¶ñº¡
+	// CheckBox -> æ˜¯å¦å¡«æ»¿
 	final JCheckBox fillJCheckBox;
 
 	// Button -> foreground/background/clean up/eraser
@@ -33,17 +31,17 @@ public class Frame extends JFrame {
 	
 	// Variables to implement the functions
 	public static int brushSize = 1;	// Brush size	
-	public static Stroke brush;	// µeµ§µ§Ä²
+	public static Stroke brush;	// ç•«ç­†ç­†è§¸
 	public static int penMode = 0;		// Different Painting Tools
-	public static Color foregroundColor = Color.BLACK;	// «e´º¦â¹w³]¬°¶Â¦â
-	public static Color backgroundColor = Color.white;	// ­I´º¦â¹w³]¬°¥Õ¦â
-	public static int fill = 0;		// Fill in: 0¬°ªÅ¤ß/µê½u, 1¬°¹ê¤ß/¹ê½u
-	public static int erase = 0;	// Eraser: 1¬°¾ó¥ÖÀ¿
-	public static int temp;	// ¤Á´«¨ì¾ó¥ÖÀ¿®ÉÀx¦sfillª¬ºA
+	public static Color foregroundColor = Color.BLACK;	// å‰æ™¯è‰²é è¨­ç‚ºé»‘è‰²
+	public static Color backgroundColor = Color.white;	// èƒŒæ™¯è‰²é è¨­ç‚ºç™½è‰²
+	public static int fill = 0;		// Fill in: 0ç‚ºç©ºå¿ƒ/è™›ç·š, 1ç‚ºå¯¦å¿ƒ/å¯¦ç·š
+	public static int erase = 0;	// Eraser: 1ç‚ºæ©¡çš®æ“¦
+	public static int temp;	// åˆ‡æ›åˆ°æ©¡çš®æ“¦æ™‚å„²å­˜fillç‹€æ…‹
 	
 	public Frame() {
 		
-		super("¤pµe®a");
+		super("å°ç•«å®¶");
 		
 		// Layout
 		interfaceLayout = new BorderLayout();
@@ -55,39 +53,39 @@ public class Frame extends JFrame {
 		ComboBoxHandler handlerC = new ComboBoxHandler();	// register ItemListeners for ComboBox
 		toolsJComboBox.addItemListener(handlerC);
 		// add ComboBox
-		toolsLayout.add(new JLabel("Ã¸¹Ï¤u¨ã"));
+		toolsLayout.add(new JLabel("ç¹ªåœ–å·¥å…·"));
 		toolsLayout.add(toolsJComboBox);
 				
 		// Radio Button -> Brush sizes				
 		// create radio buttons
 		brushJRadioButton = new JRadioButton[3];
-		brushJRadioButton[0] = new JRadioButton("¤p", true);
-		brushJRadioButton[1] = new JRadioButton("¤¤", false);
-		brushJRadioButton[2] = new JRadioButton("¤j", false);					
+		brushJRadioButton[0] = new JRadioButton("å°", true);
+		brushJRadioButton[1] = new JRadioButton("ä¸­", false);
+		brushJRadioButton[2] = new JRadioButton("å¤§", false);					
 		brushRadioGroup = new ButtonGroup();	// create logical relationship between JRadioButtons	
 		RadioButtonHandler handlerRB = new RadioButtonHandler();	// register ActionListeners for RadioButtons
-		toolsLayout.add(new JLabel("µ§¨ê¤j¤p"));
+		toolsLayout.add(new JLabel("ç­†åˆ·å¤§å°"));
 		for (int i=0; i<brushJRadioButton.length; i++) {
 			toolsLayout.add(brushJRadioButton[i]);	// add radio buttons
 			brushRadioGroup.add(brushJRadioButton[i]);	// create logical relationship between JRadioButton
 			brushJRadioButton[i].addActionListener(handlerRB);	// register ActionListeners for RadioButtons
 		}			
 				
-		// CheckBox -> ¬O§_¶ñº¡
+		// CheckBox -> æ˜¯å¦å¡«æ»¿
 		fillJCheckBox = new JCheckBox("");
 		fillJCheckBox.setEnabled(false);
 		// add CheckBox
-		toolsLayout.add(new JLabel("¶ñº¡"));
+		toolsLayout.add(new JLabel("å¡«æ»¿"));
 		toolsLayout.add(fillJCheckBox);				
 		// register listeners for JCheckBoxes
 		CheckBoxHandler handlerCB = new CheckBoxHandler();
 		fillJCheckBox.addItemListener(handlerCB);
 				
 		// Button -> foreground/background/clean up
-		foregroundJButton = new JButton("«e´º¦â");
-		backgroundJButton = new JButton("­I´º¦â");
-		cleanJButton = new JButton("²M°£µe­±");
-		eraserJButton = new JButton("¾ó¥ÖÀ¿");
+		foregroundJButton = new JButton("å‰æ™¯è‰²");
+		backgroundJButton = new JButton("èƒŒæ™¯è‰²");
+		cleanJButton = new JButton("æ¸…é™¤ç•«é¢");
+		eraserJButton = new JButton("æ©¡çš®æ“¦");
 		// add buttons
 		toolsLayout.add(foregroundJButton);
 		toolsLayout.add(backgroundJButton);
@@ -115,24 +113,24 @@ public class Frame extends JFrame {
 		public void itemStateChanged(ItemEvent event) {
 			if (event.getStateChange() == ItemEvent.SELECTED) {
 				if(erase==1) 
-					fill = temp;	// ±Nfill¤Á´«¦^­ì¥»¼Ò¦¡
-				erase = 0;	// if­ì¥»¦³¿ï¾Ü¾ó¥ÖÀ¿>>±q¾ó¥ÖÀ¿¤Á´«¦^µ§¨ê
+					fill = temp;	// å°‡fillåˆ‡æ›å›åŸæœ¬æ¨¡å¼
+				erase = 0;	// ifåŸæœ¬æœ‰é¸æ“‡æ©¡çš®æ“¦>>å¾æ©¡çš®æ“¦åˆ‡æ›å›ç­†åˆ·
 				
-				// ¦UºØµ§¨ê¹Ï®×
+				// å„ç¨®ç­†åˆ·åœ–æ¡ˆ
 				if (toolsJComboBox.getSelectedIndex() == 0) {
-					penMode = 0;	// µ§¨ê
-					fillJCheckBox.setEnabled(false);	// ¤£­ã¿ï¶ñº¡
+					penMode = 0;	// ç­†åˆ·
+					fillJCheckBox.setEnabled(false);	// ä¸å‡†é¸å¡«æ»¿
 				} else if (toolsJComboBox.getSelectedIndex() == 1) {
-					penMode = 1;	// ª½½u
+					penMode = 1;	// ç›´ç·š
 					fillJCheckBox.setEnabled(true);
 				} else if (toolsJComboBox.getSelectedIndex() == 2) {
-					penMode = 2;	// ¾ò¶ê§Î
+					penMode = 2;	// æ©¢åœ“å½¢
 					fillJCheckBox.setEnabled(true);
 				} else if (toolsJComboBox.getSelectedIndex() == 3) {
-					penMode = 3;	// ¯x§Î
+					penMode = 3;	// çŸ©å½¢
 					fillJCheckBox.setEnabled(true);
 				} else if (toolsJComboBox.getSelectedIndex() == 4) {
-					penMode = 4;	// ¶ê¨¤¯x§Î
+					penMode = 4;	// åœ“è§’çŸ©å½¢
 					fillJCheckBox.setEnabled(true);
 				}
 			}
@@ -157,9 +155,9 @@ public class Frame extends JFrame {
 		@Override
 		public void itemStateChanged(ItemEvent event) {
 			if(fillJCheckBox.isSelected())
-				fill = 1;	// ¶ñº¡/¹ê½u
+				fill = 1;	// å¡«æ»¿/å¯¦ç·š
 			else 
-				fill = 0;	// ªÅ¤ß/µê½u
+				fill = 0;	// ç©ºå¿ƒ/è™›ç·š
 		}
 	}
 			
@@ -168,17 +166,17 @@ public class Frame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent event) {
 			if (event.getSource() == foregroundJButton) {
-				foregroundColor = JColorChooser.showDialog(null, "¿ï¾Üµ§¨êÃC¦â", foregroundColor);
+				foregroundColor = JColorChooser.showDialog(null, "é¸æ“‡ç­†åˆ·é¡è‰²", foregroundColor);
 				if (foregroundColor == null)
 					foregroundColor = Color.black;
 			}
 			if (event.getSource() == backgroundJButton) {
-				backgroundColor = JColorChooser.showDialog(null, "¿ï¾Ü¶ñº¡ÃC¦â", backgroundColor);
+				backgroundColor = JColorChooser.showDialog(null, "é¸æ“‡å¡«æ»¿é¡è‰²", backgroundColor);
 				if (backgroundColor == null)
 					backgroundColor = Color.white;
 			}
 			if (event.getSource() == eraserJButton) {
-				erase = 1;	// ¾ó¥ÖÀ¿¼Ò¦¡
+				erase = 1;	// æ©¡çš®æ“¦æ¨¡å¼
 				fillJCheckBox.setEnabled(false);
 				temp = fill;
 				fill = 1;
