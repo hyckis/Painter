@@ -1,3 +1,5 @@
+// Author: YICHIN HO
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
